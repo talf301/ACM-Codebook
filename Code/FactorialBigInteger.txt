@@ -1,0 +1,49 @@
+import java.math.BigInteger;
+public class FactorialBigInteger {
+
+	public static void main(String[] args) {
+		//Calculate up to 100!
+		BigInteger[] fact = new BigInteger[101];
+		fact[0] = BigInteger.ONE;
+		fact[1] = BigInteger.ONE;
+		for(int i = 2; i < 101; i++)
+		{
+			fact[i] = fact[i-1].multiply(BigInteger.valueOf(i));
+		}
+		
+		//Now use this to calculate 100C50
+		BigInteger res = fact[100].divide(fact[50].multiply(fact[50]));
+		
+		//We can add this
+		BigInteger res2 = res.add(res);
+		
+		//We can also take maxes or mins
+		//max will have the same value as res2, min same as res
+		BigInteger max = res2.max(res);
+		BigInteger min = res2.min(res);
+		
+		//If we want to compare values
+		//This should print "res < res2"
+		if(res.compareTo(res2) == -1)
+			System.out.println("res < res2");
+		else if(res.compareTo(res2) == 0)
+			System.out.println("res = res2");
+		else if(res.compareTo(res2) == 1)
+			System.out.println("res > res2");
+		
+		//We can exponentiate
+		BigInteger factsquare = fact[100].pow(2);
+		
+		//We can do modular arithmetic
+		BigInteger divs[] = fact[100].divideAndRemainder(BigInteger.valueOf(29));
+		BigInteger quotient = divs[0];
+		BigInteger remainder = divs[1];
+		//Alternatively, this will always return nonegative
+		BigInteger remainder2 = fact[100].mod(BigInteger.valueOf(29));
+		//In the same vein we can also do this,
+		//Which returns a number equivalent to (100!)^2 mod 29
+		//You can use negative exponents in this method
+		BigInteger remainder3 = fact[100].modPow(BigInteger.valueOf(2), BigInteger.valueOf(29));
+	}
+
+}
