@@ -1,0 +1,38 @@
+int v[2002];
+ 
+void table(string p)
+{
+    v[0]=0;  
+    v[1]=0;  
+ 
+    int cur=0;
+    for(int j=2;j<p.size();j++)
+    {
+        while(cur!=0 && p[cur]!=p[j-1])
+        cur=v[cur];
+ 
+        if(p[cur]==p[j-1]) 
+        cur=cur+1;
+ 
+        v[j]=cur;
+    }
+ 
+}
+ 
+bool kmp(string p,string text)
+{
+    table(p);
+    int cur=0; 
+    for(int j=0;j<text.size();j++)
+    {
+        while(cur>0 && p[cur]!=text[j])
+        cur=v[cur];
+ 
+        if(p[cur]==text[j])
+            if(++cur==p.size())//if all all locations before index p.size() have been matched
+                return true;
+ 
+    }
+ 
+    return false;
+}
